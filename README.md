@@ -176,24 +176,24 @@ else:
 
 # 📦 requirements.txt
 
-gymnasium[box2d]  
-stable-baselines3  
-pygame  
-matplotlib  
-numpy  
+- gymnasium[box2d]  
+- stable-baselines3  
+- pygame  
+- matplotlib  
+- numpy  
 
 ---
 
 # 🧹 .gitignore  
-venv/  
-__pycache__/  
-*.npy  
-*.npz  
-*.zip  
-*.pt  
-*.pth  
-*.log  
-.DS_Store  
+- venv/  
+- __pycache__/  
+- *.npy  
+- *.npz  
+- *.zip  
+- *.pt  
+- *.pth  
+- *.log  
+- .DS_Store  
 
 ---
 
