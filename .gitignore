@@ -1,0 +1,10 @@
+venv/
+walker_env/
+__pycache__/
+*.npy
+*.npz
+*.zip
+*.pt
+*.pth
+*.log
+.DS_Store
