@@ -49,38 +49,52 @@ BipedalWalker-RL/
 
 ## 1️⃣ Clone the Repository
 ```
-git clone https://github.com/YOUR_USERNAME/BipedalWalker-RL.git```  
+git clone https://github.com/YOUR_USERNAME/BipedalWalker-RL.git  
 cd BipedalWalker-RL
 ```
 
 ## 2️⃣ Create Virtual Environment  
-```python -m venv venv```
+```
+python -m venv venv
+```
 
 Activate:
 
 **Windows**  
-```venv\Scripts\activate```
+```
+venv\Scripts\activate
+```
 
 **Linux**  
-```source venv/bin/activate```
+```
+source venv/bin/activate
+```
 
 ---
 
 ## 3️⃣ Install Dependencies (CPU)
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 ---
 
 # ⚡ GPU Setup (CUDA)
 
 ## Step 1 — Remove CPU PyTorch  
-```pip uninstall torch torchvision torchaudio -y```
+```
+pip uninstall torch torchvision torchaudio -y
+```
 
 ## Step 2 — Install CUDA PyTorch 12.1  
-```pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121```
+```
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```
 
 ## Step 3 — Check GPU 
-```python check_gpu.py```
+```
+python check_gpu.py
+```
 
 Expected:
 
@@ -93,16 +107,24 @@ GPU Name: NVIDIA RTX 3050
 # 🚀 Running the Project
 
 ## ⭐ Train Agent
-```python train.py```
+```
+python train.py
+```
 
 To force GPU:
-```model = PPO("MlpPolicy", env, device="cuda")```
+```
+model = PPO("MlpPolicy", env, device="cuda")
+```
 
 ## ⭐ Test Agent
-```python test.py```
+```
+python test.py
+```
 
 ## ⭐ Plot Rewards  
-```python plot_training.py```
+```
+python plot_training.py
+```
 
 ---
 
@@ -119,10 +141,14 @@ To force GPU:
 # 🌍 Gymnasium Environments
 
 ### Normal Mode  
-```gym.make("BipedalWalker-v3")```
+```
+gym.make("BipedalWalker-v3")
+```
 
 ### Hard Mode  
-```gym.make("BipedalWalkerHardcore-v3")```
+```
+gym.make("BipedalWalkerHardcore-v3")
+```
 
 ---
 
