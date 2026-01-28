@@ -1,176 +1,209 @@
-# 🤖 Inverse Pendulum Control using Reinforcement Learning & Classical Control
+# 🏃‍♂️ BipedalWalker-v3 Reinforcement Learning using PPO (Stable-Baselines3)
 
-This project explores balancing an inverted pendulum (CartPole) using three control strategies:
-
-- **PPO Reinforcement Learning (Stable-Baselines3)**
-- **PID Controller**
-- **LQR-like State Feedback Controller**
-
-It compares results from AI-based control versus traditional control theory.
+This project trains a Bipedal Walker agent using **Proximal Policy Optimization (PPO)** in the **Gymnasium BipedalWalker-v3** environment.  
+The agent learns stable locomotion using neural network policies, trained on **Windows 11** with support for both **CPU** and **GPU (NVIDIA RTX)**.
 
 ---
 
-## 🎯 Project Goal
-
-- Keep the pole upright (\(\theta \approx 0\))
-- Maintain the cart near the track center
-- Optimize stability and handle disturbances
-
-Applications in real-world systems include:
-- Humanoid robot balance
-- Segway stabilization
-- Robotic manipulators
+# 📌 Project Features
+- PPO policy-gradient algorithm  
+- Gymnasium + Box2D physics simulation  
+- Training & testing pipeline  
+- GPU acceleration (CUDA PyTorch)  
+- Reward logging and plotting  
+- Clean and reproducible project structure  
 
 ---
 
-## 📌 Problem Definition
+# 🧩 Tech Stack
 
-### System: *Inverted Pendulum on a Cart*
-
-State variables:
-- `x` (cart position)
-- `x_dot` (cart velocity)
-- `theta` (pendulum angle in radians)
-- `theta_dot` (pendulum angular velocity)
-
-### Control Input:
-Discrete force applied on the cart:
-- `0` → Push Left
-- `1` → Push Right
+| Component | Version |
+|----------|---------|
+| Python | 3.10.x |
+| Gymnasium | Latest |
+| Stable-Baselines3 | Latest |
+| PyTorch | CPU or CUDA 12.1 |
+| OS | Windows 10/11 |
+| GPU | NVIDIA RTX 3050 Laptop GPU |
 
 ---
 
-## 🚀 Solution Approaches
+# 📁 Project Structure
 
-| Controller | Type             | Advantages               | Limitations                |
-|------------|------------------|--------------------------|----------------------------|
-| PID        | Feedback Control | Simple, quick setup      | Hard to tune, fails under large disturbances |
-| LQR        | Optimal Control  | Good stability           | Requires full system model |
-| PPO        | Deep RL          | Learns/adapts, robust    | Needs training time, less predictable        |
-
----
-
-## 🧠 Reinforcement Learning (PPO)
-
-PPO (Proximal Policy Optimization) trains a neural network to map observations to actions to maximize the time the pole stays balanced.
-
-Training loop:
-- Observe system state
-- Decide push direction
-- Get reward for balance
-- Improve behavior iteratively
-
-Saved model: `models/pendulum_ppo.zip`
-
----
-
-## 🔧 Classical Controllers
-
-### PID
-Uses error: `target_angle (0) – theta`  
-Control law:
-
-$$u = K_p \cdot \text{error} + K_i \int{\text{error}\cdot dt} + K_d \frac{d(\text{error})}{dt}$$
-
-Simple controller; works for small deviations, struggles with large disturbances.
-
-### LQR-like Controller
-State-feedback law:
-
-$$u = -Kx$$
-
-Where `K` is tuned for the linearized system. Offers stability but needs correct modeling.
-
----
-
-## 🧪 How to Run
-
-### 1. Setup (Windows)
 ```
-.\setup.bat
+BipedalWalker-RL/
+│── train.py
+│── test.py
+│── plot_training.py
+│── check_gpu.py
+│── requirements.txt
+│── .gitignore
+│── training_rewards.npy
+│── models/                (optional)
+│── results/               (optional)
 ```
-Creates `venv/` and installs modules.
+
+---
+
+# 🛠 Installation
+
+## 1️⃣ Clone the Repository
+```
+git clone https://github.com/YOUR_USERNAME/BipedalWalker-RL.git  
+cd BipedalWalker-RL
+```
+
+## 2️⃣ Create Virtual Environment  
+```
+python -m venv venv
+```
 
 Activate:
+
+**Windows**  
 ```
-.\venv\Scripts\activate
+venv\Scripts\activate
 ```
 
-### 2. Train RL Model
+**Linux**  
 ```
-python src/train_ppo.py
-```
-
-### 3. Watch Trained Agent
-```
-python src/evaluate_ppo.py
-```
-
-### 4. Use Classical Controllers
-```
-python src/classical_pid_control.py
-```
-```
-python src/classical_lqr_control.py
+source venv/bin/activate
 ```
 
 ---
 
-## 📂 Project Structure
-
-- InversePendulum-RL
-  - src
-    - train_ppo.py — Train PPO RL agent
-    - evaluate_ppo.py — Test trained model
-    - classical_pid.py — PID controller
-    - classical_lqr.py — LQR state feedback
-  - models — Saved RL models (*.zip)
-  - results — Plots, logs, videos
-  - requirements.txt — Dependencies
-  - setup.bat — Windows setup
-  - README.md
-
+## 3️⃣ Install Dependencies (CPU)
+```
+pip install -r requirements.txt
+```
 
 ---
 
-## 📊 Results
+# ⚡ GPU Setup (CUDA)
 
-Control Method | Avg Balance Time | Notes
----------------|------------------|-----------------------------------
-PID            | ⭐⭐☆☆☆        | Works only for small angles
-LQR            | ⭐⭐⭐⭐☆      | Stable & quick response
-PPO            | ⭐⭐⭐⭐⭐     | Best after training; most robust
+## Step 1 — Remove CPU PyTorch  
+```
+pip uninstall torch torchvision torchaudio -y
+```
 
-RL achieves the most robust balancing under disturbances.
+## Step 2 — Install CUDA PyTorch 12.1  
+```
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```
 
----
+## Step 3 — Check GPU 
+```
+python check_gpu.py
+```
 
-## 📈 Future Improvements
+Expected:
 
-- Add noisy sensors (realistic conditions)
-- Use continuous action space (SAC / TD3)
-- Add result graphs to README
-- Export controller to Arduino robot
-
----
-
-## 🧑‍💻 Technologies
-
-- Python 3.10
-- Gymnasium
-- Stable-Baselines3
-- PyTorch
-- NumPy
+Torch version: x.x.x  
+CUDA available: True  
+GPU Name: NVIDIA RTX 3050
 
 ---
 
-## 🏆 Credits
+# 🚀 Running the Project
 
-Project by: Saumya Shah  
-For learning and research in control systems + AI.
+## ⭐ Train Agent
+```
+python train.py
+```
+
+To force GPU:
+```
+model = PPO("MlpPolicy", env, device="cuda")
+```
+
+## ⭐ Test Agent
+```
+python test.py
+```
+
+## ⭐ Plot Rewards  
+```
+python plot_training.py
+```
 
 ---
 
-⭐ If you like this project, star the repo!
+# 🤖 Algorithm Used — PPO
+
+**Proximal Policy Optimization (PPO)**  
+- Stable policy updates  
+- Works well on continuous control  
+- Less sensitive to hyperparameters  
+- Best choice for Bipedal Walker tasks  
 
 ---
+
+# 🌍 Gymnasium Environments
+
+### Normal Mode  
+```
+gym.make("BipedalWalker-v3")
+```
+
+### Hard Mode  
+```
+gym.make("BipedalWalkerHardcore-v3")
+```
+
+---
+
+# 📈 Performance (Approx)
+
+| Mode | Hardware | Time (500k steps) |
+|------|----------|-------------------|
+| Normal | CPU | ~50–60 mins |
+| Normal | GPU | ~20–30 mins |
+| Hardcore | GPU | 2–4 hours |
+
+---
+
+# 🧪 check_gpu.py
+```
+import torch
+print("Torch version:", torch.__version__)
+print("CUDA available:", torch.cuda.is_available())
+if torch.cuda.is_available():
+    print("GPU Name:", torch.cuda.get_device_name(0))
+else:
+    print("Running on CPU only")
+```
+---
+
+# 📦 requirements.txt
+
+- gymnasium[box2d]  
+- stable-baselines3  
+- pygame  
+- matplotlib  
+- numpy  
+
+---
+
+# 🧹 .gitignore  
+- venv/  
+- __pycache__/  
+- *.npy  
+- *.npz  
+- *.zip  
+- *.pt  
+- *.pth  
+- *.log  
+- .DS_Store  
+
+---
+
+# 🙌 Credits  
+- Gymnasium  
+- Stable-Baselines3  
+- PyTorch  
+- Box2D  
+
+---
+
+# 🏁 Summary  
+This repository contains a full PPO training pipeline for BipedalWalker-v3 with CPU & GPU support, clean structure, reward logging, and complete reproducibility.
